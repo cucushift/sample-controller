@@ -171,7 +171,6 @@ go get -u github.com/derekparker/delve/cmd/dlv
 dlv exec ./sample-controller -- -kubeconfig=$HOME/.kube/config  -logtostderr=true -v=2
 cd go/src/k8s.io/sample-controller/
 vim controller.go 
-$GOPATH/src/k8s.io/sample-controller
 cd $GOPATH/src/k8s.io/sample-controller
 cat artifacts/examples/crd.yaml
 cat artifacts/examples/example-foo.yaml
