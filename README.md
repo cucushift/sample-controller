@@ -144,3 +144,39 @@ k8s.io/client-go.
 https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/sample-controller.
 Code changes are made in that location, merged into k8s.io/kubernetes and
 later synced here.
+
+### ME 操作
+```shell
+yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install -y go
+yum install -y git
+vim ~/.bashrc 
+source ~/.bashrc 
+oc adm policy add-scc-to-user privileged system:serviceaccount:default:default
+oc adm policy add-scc-to-group anyuid system:authenticated
+cat artifacts/examples/crd.yaml
+source ~/.bashrc 
+env |grep -i gop
+mkdir -p $GOPATH/src/k8s.io/
+cd $GOPATH/src/k8s.io/
+git clone https://github.com/kubernetes/sample-controller.git
+cd sample-controller
+ls
+go build -gcflags '-N -l'
+./sample-controller -kubeconfig=$HOME/.kube/config  -logtostderr=true -v=2
+ls
+set -o vi
+dlv exec ./sample-controller -- -kubeconfig=$HOME/.kube/config  -logtostderr=true -v=2
+go get -u github.com/derekparker/delve/cmd/dlv
+dlv exec ./sample-controller -- -kubeconfig=$HOME/.kube/config  -logtostderr=true -v=2
+cd go/src/k8s.io/sample-controller/
+vim controller.go 
+$GOPATH/src/k8s.io/sample-controller
+cd $GOPATH/src/k8s.io/sample-controller
+cat artifacts/examples/crd.yaml
+cat artifacts/examples/example-foo.yaml
+vim main.go
+oc create -f artifacts/examples/crd.yaml
+oc create -f artifacts/examples/example-foo.yaml
+oc edit deployment.apps/example-foo
+```
